@@ -5,7 +5,6 @@ import numpy as np
 
 def plot_table(function):
     x = np.arange(0.0, 4.0, 0.01)
-    # y = function(x)
     y = [function(n) for n in np.arange(0.0, 4.0, 0.01)]
 
     fig, ax = plt.subplots()
@@ -20,7 +19,6 @@ def get_function_table(partion: int=10):
     """returns table with values (x, f(x))
     """
     step = 4 / (partion - 1)
-    print(f"partion size: h = {step}")
     f_table_dict = dict()
     f_table_list = list()
 
@@ -132,10 +130,7 @@ def get_cubic_spline_coefs(f_table: list) -> list:
     A = np.zeros((n, n))
     A[0][0] = 1
     A[n-1][n-1] = 1
-
     b = np.zeros((n, 1))
-    # b[0] = 0  # NOTE: no need
-    # b[n-1] = 0  # NOTE: no need
 
     for i in range(1, n - 1):
         A[i][i - 1] = (f_table[i][0] - f_table[i - 1][0])
@@ -186,9 +181,6 @@ def cubic_spline(x: float, f_table: list, coefs: list) -> float:
 
 def main():
     f_table_dict, f_table_list = get_function_table(partion=20)
-
-    # for point in f_table_list:
-    #     print(f"{point[0]:0.2f}, {point[1]:0.2f}")
 
     # plot function with lagrangian interpolation
     plot_table(lambda x: lagrangian_interpolation(x=x, f_table=f_table_dict))
